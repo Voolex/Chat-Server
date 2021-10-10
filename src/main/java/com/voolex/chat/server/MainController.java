@@ -30,10 +30,6 @@ public class MainController {
 
     @MessageMapping("chat")
     public void test2(Authentication authentication, String o) {
-        System.out.println(authentication.getCredentials());
-        System.out.println(authentication.getName());
-        System.out.println(authentication.getAuthorities());
-        System.out.println("XUJ");
         System.out.println(o);
         ChatUser chatUser = (ChatUser) authentication.getPrincipal();
         System.out.println(chatUser.getUserEntity());
