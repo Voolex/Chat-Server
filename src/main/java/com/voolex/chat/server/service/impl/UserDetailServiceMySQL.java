@@ -1,6 +1,5 @@
 package com.voolex.chat.server.service.impl;
 
-import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.model.ChatUser;
 import com.voolex.chat.server.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -39,22 +39,22 @@ public class ChatUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !userEntity.isLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -63,6 +63,10 @@ public class ChatUser implements UserDetails {
             return this.getId().equals(((ChatUser) obj).getId());
         }
         return false;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
     @Override

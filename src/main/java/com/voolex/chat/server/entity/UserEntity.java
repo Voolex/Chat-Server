@@ -1,9 +1,6 @@
 package com.voolex.chat.server.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -16,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserEntity {
 
     @Id
@@ -28,4 +26,7 @@ public class UserEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "locked")
+    private boolean isLocked;
 }

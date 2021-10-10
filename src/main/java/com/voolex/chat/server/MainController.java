@@ -1,6 +1,7 @@
 package com.voolex.chat.server;
 
 import com.voolex.chat.common.dto.InitMessage;
+import com.voolex.chat.server.model.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -8,6 +9,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
@@ -32,6 +35,8 @@ public class MainController {
         System.out.println(authentication.getAuthorities());
         System.out.println("XUJ");
         System.out.println(o);
+        ChatUser chatUser = (ChatUser) authentication.getPrincipal();
+        System.out.println(chatUser.getUserEntity());
 
         InitMessage initMessage = new InitMessage("ver", "tst");
 
