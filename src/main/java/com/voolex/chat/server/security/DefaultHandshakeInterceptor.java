@@ -1,9 +1,12 @@
 package com.voolex.chat.server.security;
 
 import com.voolex.chat.server.service.AuthenticationService;
+import com.voolex.chat.server.service.impl.BCryptPasswordEncryptionService;
 import com.voolex.chat.server.service.impl.UserDetailServiceMySQL;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -21,6 +24,8 @@ import java.util.Map;
 @Component
 public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
 
+    private static final Logger logger = LoggerFactory.getLogger(DefaultHandshakeInterceptor.class);
+
     @Autowired
     private UserDetailServiceMySQL userDetailsService;
 
@@ -30,6 +35,9 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
         AuthHeaders authHeaders = getHeadersFromHttpRequest(serverHttpRequest);
+        logger.debug("Попытка подключения пользователя [%s] : ip [%s]".
+                formatted(authHeaders.getUsername(),
+                        serverHttpRequest.getRemoteAddress().getHostString()));
         UserDetails principal = userDetailsService.loadUserByUsername(authHeaders.getUsername());
         return authenticationService.attemptAuthenticate(principal, authHeaders.getPassword());
     }
@@ -37,16 +45,6 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
     @Override
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
 
-    }
-
-    /**
-     * Класс содержит информацию, необходимую для аутентификации
-     */
-    @Getter
-    @RequiredArgsConstructor
-    private static final class AuthHeaders {
-        private final String username;
-        private final String password;
     }
 
     public AuthHeaders getHeadersFromHttpRequest(ServerHttpRequest serverHttpRequest) {
@@ -61,4 +59,15 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
         }
         return new AuthHeaders(uHeaders.get(0), pHeaders.get(0));
     }
+
+    /**
+     * Класс содержит информацию, необходимую для аутентификации
+     */
+    @Getter
+    @RequiredArgsConstructor
+    private static final class AuthHeaders {
+        private final String username;
+        private final String password;
+    }
+
 }
