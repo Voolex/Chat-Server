@@ -5,3 +5,5 @@ spring:
     password: chat_user
   jpa:
     show-sql: true
+build:
+  version: @project.version@

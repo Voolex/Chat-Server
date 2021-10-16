@@ -1,6 +1,8 @@
 package com.voolex.chat.server;
 
 import com.voolex.chat.common.dto.InitMessage;
+import com.voolex.chat.common.dto.init.SubscriptionInfo;
+import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.model.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
@@ -19,6 +21,9 @@ import java.security.Principal;
 public class MainController {
 
     @Autowired
+    private BuildInfo buildInfo;
+
+    @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
 //    @SubscribeMapping("topic/s")
@@ -34,7 +39,11 @@ public class MainController {
         ChatUser chatUser = (ChatUser) authentication.getPrincipal();
         System.out.println(chatUser.getUserEntity());
 
-        InitMessage initMessage = new InitMessage("ver", "tst");
+        InitMessage initMessage = InitMessage.builder().message("Привет пидор").
+                serverVersion(buildInfo.getVersion())
+                .subscriptionInfo(new SubscriptionInfo("Заллупа", "Пупа"))
+                .subscriptionInfo(new SubscriptionInfo("ddddd", "Пупа"))
+                .build();
 
         messagingTemplate.convertAndSendToUser("usertest2", "private/messages", initMessage);
     }
