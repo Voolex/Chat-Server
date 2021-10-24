@@ -1,8 +1,7 @@
-package com.voolex.chat.server;
+package com.voolex.chat.server.controller;
 
 import com.voolex.chat.common.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.dto.messages.InitMessage;
-import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.mapper.UserEntityMapper;
 import com.voolex.chat.server.model.ChatUser;
 import com.voolex.chat.server.service.MessagingService;
@@ -15,8 +14,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-
-import java.security.Principal;
 
 @Controller
 public class MainController {
@@ -39,7 +36,7 @@ public class MainController {
 //        System.out.println(principal.getName());
 //    }2563
 
-    @MessageMapping("private")
+    @MessageMapping("private/messages")
     public void test2(Authentication authentication, String o) {
         System.out.println(o);
         ChatUser chatUser = (ChatUser) authentication.getPrincipal();
@@ -52,16 +49,5 @@ public class MainController {
                 .build();
 
         messagingTemplate.convertAndSendToUser("usertest2", "private/messages", initMessage);
-    }
-
-    /**
-     * Принимает запрос для инциализации настроек на клиенте
-     * После рукопожатия клиент должен подписаться на этот адрес
-     */
-    @SubscribeMapping("{username}/init")
-    public void initSubscribeHandle(@DestinationVariable String username, Authentication authentication) {
-        logger.info("Пользователь %s запрашевает информацию для инициализации".formatted(username));
-        ChatUser chatUser = (ChatUser) authentication.getPrincipal();
-        messagingService.sendInitMessageToUser(chatUser.getUserEntity());
     }
 }
