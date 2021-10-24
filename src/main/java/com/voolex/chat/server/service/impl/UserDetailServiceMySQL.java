@@ -27,6 +27,7 @@ public class UserDetailServiceMySQL implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         logger.debug("Загрузка пользователя [%s] из БД...".formatted(s));
+
         var userEntity = userEntityRepository.findByUsername(s);
         if(userEntity.isPresent()) {
             // TODO Временное решение выдавать всем роль ROLE_USER, пока не придумана ролевая модель

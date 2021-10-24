@@ -51,7 +51,7 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
         var headers = serverHttpRequest.getHeaders();
         var uHeaders = headers.get("username");
         var pHeaders = headers.get("password");
-        if(uHeaders == null || pHeaders == null) {
+        if(uHeaders == null || pHeaders == null || uHeaders.isEmpty() || pHeaders.isEmpty()) {
             // TODO Либо найти, либо написать свое исключение для этого случая
             throw new AuthenticationException("auth headers not set") {
 
