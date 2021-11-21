@@ -1,13 +1,16 @@
 package com.voolex.chat.server.service.impl;
 
 import com.voolex.chat.common.dto.messages.BaseMessage;
-import com.voolex.chat.common.dto.messages.InitMessage;
+import com.voolex.chat.common.dto.messages.server.InitMessage;
+import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.MessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import static com.voolex.chat.common.constants.destinations.Destinations.SERVER_MESSAGE_DESTINATION;
 
 @Service
 public class MessagingServiceDefault implements MessagingService {
@@ -19,7 +22,7 @@ public class MessagingServiceDefault implements MessagingService {
     private InitMessageCreatorService initMessageCreatorService;
 
     @Override
-    public <T extends BaseMessage> void sendToUser(UserEntity userEntity, T message) {
+    public <T extends UserMessage> void sendToUser(UserEntity userEntity, T message) {
         messagingTemplate.convertAndSendToUser(userEntity.getUsername(), "private/messages", message);
     }
 
@@ -32,7 +35,7 @@ public class MessagingServiceDefault implements MessagingService {
     public void sendInitMessageToUser(UserEntity userEntity) {
         sendToUser(
                 userEntity,
-                "init",
+                SERVER_MESSAGE_DESTINATION,
                 initMessageCreatorService.createInitMessage(userEntity)
         );
     }

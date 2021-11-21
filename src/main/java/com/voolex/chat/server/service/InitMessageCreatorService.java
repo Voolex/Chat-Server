@@ -1,6 +1,6 @@
 package com.voolex.chat.server.service;
 
-import com.voolex.chat.common.dto.messages.InitMessage;
+import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.server.entity.UserEntity;
 
 /**

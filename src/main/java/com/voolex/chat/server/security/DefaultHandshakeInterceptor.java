@@ -1,8 +1,7 @@
 package com.voolex.chat.server.security;
 
 import com.voolex.chat.server.service.AuthenticationService;
-import com.voolex.chat.server.service.impl.BCryptPasswordEncryptionService;
-import com.voolex.chat.server.service.impl.UserDetailServiceMySQL;
+import com.voolex.chat.server.service.impl.UserDetailServiceDefault;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(DefaultHandshakeInterceptor.class);
 
     @Autowired
-    private UserDetailServiceMySQL userDetailsService;
+    private UserDetailServiceDefault userDetailsService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -35,7 +34,7 @@ public class DefaultHandshakeInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
         AuthHeaders authHeaders = getHeadersFromHttpRequest(serverHttpRequest);
-        logger.debug("Попытка подключения пользователя [%s] : ip [%s]".
+        logger.info("Попытка подключения пользователя [%s] : ip [%s]".
                 formatted(authHeaders.getUsername(),
                         serverHttpRequest.getRemoteAddress().getHostString()));
         UserDetails principal = userDetailsService.loadUserByUsername(authHeaders.getUsername());
