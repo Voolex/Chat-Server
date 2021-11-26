@@ -1,8 +1,11 @@
 package com.voolex.chat.server.entity;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,15 +13,32 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "users_dialogs")
-@IdClass(UserDialogsPrimaryKey.class)
+@ToString
 public class UserDialogs {
 
     @Id
-    @Column(name = "user_id")
-    @OneToMany(cascade = CascadeType.ALL)
-    private long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @ToString.Exclude
+    @Getter(value = AccessLevel.PRIVATE)
+    private Long id;
+//
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id", referencedColumnName = "user_id")
+////    @LazyCollection(LazyCollectionOption.FALSE)
+//    private List<UserEntity> userId;
 
-    @Id
-    @Column(name = "with_user_id")
-    private long withUserId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "with_user_id", referencedColumnName = "id")
+    private UserEntity withUserEntity;
+//
+//    @OneToMany
+//    @JoinColumn(name = "with_user_id", referencedColumnName = "id")
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private List<UserEntity> withUserId;
 }

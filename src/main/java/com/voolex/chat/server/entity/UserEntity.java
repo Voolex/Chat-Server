@@ -3,6 +3,7 @@ package com.voolex.chat.server.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Сущность пользовательского аккаунта в БД
@@ -19,7 +20,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -29,4 +30,8 @@ public class UserEntity {
 
     @Column(name = "locked")
     private boolean isLocked;
+
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<UserDialogs> userDialogs;
 }

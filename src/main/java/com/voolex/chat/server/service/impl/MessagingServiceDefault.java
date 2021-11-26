@@ -9,6 +9,7 @@ import com.voolex.chat.server.service.MessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.voolex.chat.common.constants.destinations.Destinations.SERVER_MESSAGE_DESTINATION;
 

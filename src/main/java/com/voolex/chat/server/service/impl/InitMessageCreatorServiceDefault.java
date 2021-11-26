@@ -5,9 +5,14 @@ import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.mapper.UserEntityMapper;
+import com.voolex.chat.server.repository.UserDialogsRepository;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
+
 
 @Service
 public class InitMessageCreatorServiceDefault implements InitMessageCreatorService {
@@ -19,16 +24,27 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private BuildInfo buildInfo;
 
     @Override
+    @Transactional
     public InitMessage createInitMessage(UserEntity userEntity) {
-        InitMessage initMessage = InitMessage.builder().
-                message("Init message").
-                serverVersion(buildInfo.getVersion()).
-                subscriptionInfo(new SubscriptionInfo(
+        InitMessage initMessage = InitMessage.builder()
+                .message("Init message")
+                .serverVersion(buildInfo.getVersion())
+                .subscriptionInfo(new SubscriptionInfo(
                         createPrivateMessagesDestination(userEntity),
                         "Private messages destination")
-                ).
-                userEntityDTO(userEntityMapper.toDTO(userEntity)).
-                build();
+                )
+                .userEntityDTO(userEntityMapper.toDTO(userEntity))
+                .userDialogs(userEntity.getUserDialogs().stream()
+                        .map(
+                                entity -> userEntityMapper.toDTO(entity.getWithUserEntity())
+                        )
+                        .collect(Collectors.toList()))
+                .build();
+
+        userEntity.getUserDialogs().forEach(System.out::println);
+//        var dialogs = userDialogsRepository.findByUserEntity(userEntity);
+////        dialogs.ifPresent(d -> d.forEach(System.out::println));
+//        dialogs.forEach(System.out::println);
         return initMessage;
     }
 
