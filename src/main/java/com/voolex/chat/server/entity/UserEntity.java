@@ -26,6 +26,7 @@ public class UserEntity {
     private String username;
 
     @Column(name = "password")
+    @ToString.Exclude
     private String password;
 
     @Column(name = "locked")
@@ -33,5 +34,5 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     @ToString.Exclude
-    private List<UserDialogs> userDialogs;
+    private List<UserDialog> userDialogs;
 }

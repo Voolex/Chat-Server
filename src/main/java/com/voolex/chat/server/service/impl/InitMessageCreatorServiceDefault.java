@@ -4,6 +4,7 @@ import com.voolex.chat.common.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.entity.UserEntity;
+import com.voolex.chat.server.mapper.UserDialogMapper;
 import com.voolex.chat.server.mapper.UserEntityMapper;
 import com.voolex.chat.server.repository.UserDialogsRepository;
 import com.voolex.chat.server.service.InitMessageCreatorService;
@@ -21,10 +22,13 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private UserEntityMapper userEntityMapper;
 
     @Autowired
+    private UserDialogMapper userDialogMapper;
+
+    @Autowired
     private BuildInfo buildInfo;
 
     @Override
-    @Transactional
+    //@Transactional
     public InitMessage createInitMessage(UserEntity userEntity) {
         InitMessage initMessage = InitMessage.builder()
                 .message("Init message")
@@ -36,7 +40,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
                 .userDialogs(userEntity.getUserDialogs().stream()
                         .map(
-                                entity -> userEntityMapper.toDTO(entity.getWithUserEntity())
+                                entity -> userDialogMapper.toDTO(entity)
                         )
                         .collect(Collectors.toList()))
                 .build();

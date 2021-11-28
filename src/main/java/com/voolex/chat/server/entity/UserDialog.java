@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "users_dialogs")
 @ToString
-public class UserDialogs {
+public class UserDialog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +37,9 @@ public class UserDialogs {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "with_user_id", referencedColumnName = "id")
     private UserEntity withUserEntity;
+
+    @Column(name = "last_message_datetime")
+    private LocalDateTime lastMessageDateTime;
 //
 //    @OneToMany
 //    @JoinColumn(name = "with_user_id", referencedColumnName = "id")
