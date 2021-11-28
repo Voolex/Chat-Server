@@ -8,6 +8,7 @@ import com.voolex.chat.server.mapper.UserDialogMapper;
 import com.voolex.chat.server.mapper.UserEntityMapper;
 import com.voolex.chat.server.repository.UserDialogsRepository;
 import com.voolex.chat.server.service.InitMessageCreatorService;
+import com.voolex.chat.server.service.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private UserEntityMapper userEntityMapper;
 
     @Autowired
-    private UserDialogMapper userDialogMapper;
+    private UserDialogService userDialogService;
 
     @Autowired
     private BuildInfo buildInfo;
@@ -38,11 +39,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                         "Private messages destination")
                 )
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
-                .userDialogs(userEntity.getUserDialogs().stream()
-                        .map(
-                                entity -> userDialogMapper.toDTO(entity)
-                        )
-                        .collect(Collectors.toList()))
+                .userDialogs(userDialogService.findByUserEntity(userEntity))
                 .build();
 
         userEntity.getUserDialogs().forEach(System.out::println);

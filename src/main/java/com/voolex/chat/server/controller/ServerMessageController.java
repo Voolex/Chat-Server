@@ -3,6 +3,7 @@ package com.voolex.chat.server.controller;
 import com.voolex.chat.server.model.ChatUser;
 import com.voolex.chat.server.service.MessagingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ServerMessageController {
-    private static final Logger logger = LoggerFactory.getLogger(ServerMessageController.class);
 
     private final MessagingService messagingService;
 
@@ -28,7 +29,7 @@ public class ServerMessageController {
      */
     @SubscribeMapping("{username}/server")
     public void initSubscribeHandle(@DestinationVariable String username, Authentication authentication) {
-        logger.info("Пользователь %s запрашевает информацию для инициализации".formatted(username));
+        log.info("Пользователь %s запрашевает информацию для инициализации".formatted(username));
         ChatUser chatUser = (ChatUser) authentication.getPrincipal();
         messagingService.sendInitMessageToUser(chatUser.getUserEntity());
     }
