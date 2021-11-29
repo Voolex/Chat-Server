@@ -1,5 +1,6 @@
 package com.voolex.chat.server.entity;
 
+import com.voolex.chat.common.dto.common.MessageType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,4 +41,8 @@ public class PrivateMessage {
 
     @Column(name = "datetime")
     private LocalDateTime dateTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payload_type")
+    private MessageType messageType;
 }

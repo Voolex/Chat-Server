@@ -20,7 +20,7 @@ public class PrivateMessageInboundHandlerDefault implements PrivateMessageInboun
         try {
             validateUserMessage(userMessage);
 
-
+            
         } catch (ValidationUserMessageException e) {
             log.error("error handling message from user", e);
         }
@@ -28,7 +28,6 @@ public class PrivateMessageInboundHandlerDefault implements PrivateMessageInboun
 
     /**
      * Метод валидирует сущность сообщения
-     * @return
      */
     private void validateUserMessage(UserMessage userMessage) {
         ChatUser chatUser = (ChatUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

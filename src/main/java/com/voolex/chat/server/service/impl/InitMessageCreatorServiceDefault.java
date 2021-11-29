@@ -4,16 +4,12 @@ import com.voolex.chat.common.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.entity.UserEntity;
-import com.voolex.chat.server.mapper.UserDialogMapper;
 import com.voolex.chat.server.mapper.UserEntityMapper;
-import com.voolex.chat.server.repository.UserDialogsRepository;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Collectors;
 
 
 @Service
@@ -29,7 +25,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private BuildInfo buildInfo;
 
     @Override
-    //@Transactional
+    @Transactional
     public InitMessage createInitMessage(UserEntity userEntity) {
         InitMessage initMessage = InitMessage.builder()
                 .message("Init message")
@@ -42,10 +38,11 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .userDialogs(userDialogService.findByUserEntity(userEntity))
                 .build();
 
-        userEntity.getUserDialogs().forEach(System.out::println);
+        userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
 //        var dialogs = userDialogsRepository.findByUserEntity(userEntity);
 ////        dialogs.ifPresent(d -> d.forEach(System.out::println));
 //        dialogs.forEach(System.out::println);
+
         return initMessage;
     }
 

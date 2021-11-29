@@ -8,13 +8,13 @@ import java.util.List;
 /**
  * Сущность пользовательского аккаунта в БД
  */
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
+@Entity
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -32,7 +32,7 @@ public class UserEntity {
     @Column(name = "locked")
     private boolean isLocked;
 
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<UserDialog> userDialogs;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users_dialogs")
-@ToString
+//@ToString
 public class UserDialog {
 
     @Id
@@ -30,11 +30,11 @@ public class UserDialog {
 //    private List<UserEntity> userId;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "with_user_id", referencedColumnName = "id")
     private UserEntity withUserEntity;
 
