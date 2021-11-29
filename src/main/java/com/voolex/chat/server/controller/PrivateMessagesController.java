@@ -28,7 +28,7 @@ public class PrivateMessagesController {
 //        System.out.println("SUB");
 ////        System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
 //        System.out.println(principal.getName());
-//    }2563
+//    }
 
     @MessageMapping("private/messages")
     public void test2(Authentication authentication, UserMessage userMessage) {

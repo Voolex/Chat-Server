@@ -20,9 +20,8 @@ public class PrivateMessageInboundHandlerDefault implements PrivateMessageInboun
         try {
             validateUserMessage(userMessage);
 
-            
         } catch (ValidationUserMessageException e) {
-            log.error("error handling message from user", e);
+            log.error("error handling message from user - " + e.getMessage(), e);
         }
     }
 
