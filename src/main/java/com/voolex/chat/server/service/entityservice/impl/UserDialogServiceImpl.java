@@ -1,26 +1,19 @@
-package com.voolex.chat.server.service.impl;
+package com.voolex.chat.server.service.entityservice.impl;
 
 import com.voolex.chat.common.dto.common.UserDialogDTO;
-import com.voolex.chat.server.entity.UserDialog;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.mapper.UserDialogMapper;
 import com.voolex.chat.server.repository.UserDialogsRepository;
-import com.voolex.chat.server.repository.UserEntityRepository;
-import com.voolex.chat.server.service.UserDialogService;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDialogServiceDefault implements UserDialogService {
+public class UserDialogServiceImpl implements UserDialogService {
 
     @Autowired
     private UserDialogMapper userDialogMapper;

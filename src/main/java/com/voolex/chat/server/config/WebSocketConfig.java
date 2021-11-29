@@ -2,8 +2,8 @@ package com.voolex.chat.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.voolex.chat.server.security.DefaultHandshakeInterceptor;
-import com.voolex.chat.server.service.AuthenticationService;
-import com.voolex.chat.server.service.impl.UserDetailServiceDefault;
+import com.voolex.chat.server.service.security.AuthenticationService;
+import com.voolex.chat.server.service.security.UserDetailServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;

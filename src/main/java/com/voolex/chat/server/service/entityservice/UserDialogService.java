@@ -1,4 +1,4 @@
-package com.voolex.chat.server.service;
+package com.voolex.chat.server.service.entityservice;
 
 import com.voolex.chat.common.dto.common.UserDialogDTO;
 import com.voolex.chat.server.entity.UserDialog;

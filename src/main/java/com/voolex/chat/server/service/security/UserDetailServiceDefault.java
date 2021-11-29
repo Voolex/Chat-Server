@@ -1,7 +1,8 @@
-package com.voolex.chat.server.service.impl;
+package com.voolex.chat.server.service.security;
 
 import com.voolex.chat.server.model.ChatUser;
 import com.voolex.chat.server.repository.UserEntityRepository;
+import com.voolex.chat.server.service.entityservice.UserEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ public class UserDetailServiceDefault implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(UserDetailServiceDefault.class);
 
     @Autowired
-    private UserEntityRepository userEntityRepository;
+    private UserEntityService userEntityService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         logger.debug("Загрузка пользователя [%s] из БД...".formatted(s));
 
-        var userEntity = userEntityRepository.findByUsername(s);
+        var userEntity = userEntityService.findByUsername(s);
         if(userEntity.isPresent()) {
             // TODO Временное решение выдавать всем роль ROLE_USER, пока не придумана ролевая модель
             logger.debug("Пользователь [%s] найден. Создаем UserDetails...".formatted(userEntity.get().getUsername()));

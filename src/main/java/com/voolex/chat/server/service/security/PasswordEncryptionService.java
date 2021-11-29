@@ -1,4 +1,4 @@
-package com.voolex.chat.server.service;
+package com.voolex.chat.server.service.security;
 
 
 /**

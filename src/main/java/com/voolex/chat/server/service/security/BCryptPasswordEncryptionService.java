@@ -1,8 +1,7 @@
-package com.voolex.chat.server.service.impl;
+package com.voolex.chat.server.service.security;
 
-import com.voolex.chat.server.service.PasswordEncryptionService;
+import com.voolex.chat.server.service.security.PasswordEncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

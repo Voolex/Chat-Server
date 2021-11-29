@@ -1,7 +1,7 @@
 package com.voolex.chat.server.security;
 
-import com.voolex.chat.server.service.AuthenticationService;
-import com.voolex.chat.server.service.impl.UserDetailServiceDefault;
+import com.voolex.chat.server.service.security.AuthenticationService;
+import com.voolex.chat.server.service.security.UserDetailServiceDefault;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
