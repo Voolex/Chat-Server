@@ -19,4 +19,6 @@ public interface PrivateMessageService {
      * @return список сообщений пользователя
      */
     List<PrivateMessage> findAllBySender(long userId);
+
+    PrivateMessage save(PrivateMessage privateMessage);
 }

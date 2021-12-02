@@ -29,4 +29,10 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
         // TODO
         return null;
     }
+
+    @Override
+    @Transactional
+    public PrivateMessage save(PrivateMessage privateMessage) {
+        return privateMessageRepository.save(privateMessage);
+    }
 }

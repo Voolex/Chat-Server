@@ -1,10 +1,7 @@
 package com.voolex.chat.server.entity;
 
 import com.voolex.chat.common.dto.common.MessageType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PrivateMessage {
 
     @Id

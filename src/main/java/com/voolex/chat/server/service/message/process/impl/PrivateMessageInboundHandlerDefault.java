@@ -1,12 +1,13 @@
-package com.voolex.chat.server.service.impl;
+package com.voolex.chat.server.service.message.process.impl;
 
 
 import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.exception.ValidationUserMessageException;
 import com.voolex.chat.server.model.ChatUser;
-import com.voolex.chat.server.service.PrivateMessageInboundHandler;
+import com.voolex.chat.server.service.message.process.MessageCreatorService;
+import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -15,10 +16,14 @@ import java.util.Objects;
 @Slf4j
 public class PrivateMessageInboundHandlerDefault implements PrivateMessageInboundHandler {
 
+    @Autowired
+    private MessageCreatorService messageCreatorService;
+
     @Override
-    public void handle(UserMessage userMessage) {
+    public void handle(ChatUser currentUser, UserMessage userMessage) {
         try {
-            validateUserMessage(userMessage);
+            validateUserMessage(currentUser, userMessage);
+            messageCreatorService.messageCreate(userMessage);
 
         } catch (ValidationUserMessageException e) {
             log.error("error handling message from user - " + e.getMessage(), e);
@@ -28,8 +33,7 @@ public class PrivateMessageInboundHandlerDefault implements PrivateMessageInboun
     /**
      * Метод валидирует сущность сообщения
      */
-    private void validateUserMessage(UserMessage userMessage) {
-        ChatUser chatUser = (ChatUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private void validateUserMessage(ChatUser chatUser, UserMessage userMessage) {
         if(chatUser.getId() != userMessage.getSenderId()) {
             throw new ValidationUserMessageException("principal user id does not match with userMessage id");
         }

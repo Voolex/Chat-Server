@@ -1,8 +1,10 @@
 package com.voolex.chat.server.controller;
 
+import com.voolex.chat.common.dto.messages.user.AbstractUserMessage;
 import com.voolex.chat.common.dto.messages.user.UserMessage;
+import com.voolex.chat.server.model.ChatUser;
 import com.voolex.chat.server.repository.UserEntityRepository;
-import com.voolex.chat.server.service.PrivateMessageInboundHandler;
+import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -27,8 +29,9 @@ public class PrivateMessagesController {
 //    }
 
     @MessageMapping("private/messages")
-    public void test2(Authentication authentication, UserMessage userMessage) {
-        privateMessageInboundHandler.handle(userMessage);
+    public void privateMessageHandle(Authentication authentication, AbstractUserMessage userMessage) {
+        log.info("private/messages ");
+        privateMessageInboundHandler.handle((ChatUser) authentication.getPrincipal(), userMessage);
 //        var user = userEntityRepository.findById(userMessage.getRecipientId());
 //        if(user.isPresent()) {
 //

@@ -2,14 +2,20 @@ package com.voolex.chat.server.service.impl;
 
 import com.voolex.chat.common.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.dto.messages.server.InitMessage;
+import com.voolex.chat.common.dto.messages.user.TextUserMessage;
+import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.common.BuildInfo;
+import com.voolex.chat.server.controller.PrivateMessagesController;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.mapper.impl.UserEntityMapperDefault;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 
 @Service
@@ -39,9 +45,6 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .build();
 
         userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
-//        var dialogs = userDialogsRepository.findByUserEntity(userEntity);
-////        dialogs.ifPresent(d -> d.forEach(System.out::println));
-//        dialogs.forEach(System.out::println);
 
         return initMessage;
     }
