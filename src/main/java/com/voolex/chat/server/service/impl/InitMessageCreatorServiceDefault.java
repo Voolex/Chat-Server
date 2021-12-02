@@ -4,7 +4,7 @@ import com.voolex.chat.common.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.entity.UserEntity;
-import com.voolex.chat.server.mapper.UserEntityMapper;
+import com.voolex.chat.server.mapper.impl.UserEntityMapperDefault;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InitMessageCreatorServiceDefault implements InitMessageCreatorService {
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
+    private UserEntityMapperDefault userEntityMapper;
 
     @Autowired
     private UserDialogService userDialogService;

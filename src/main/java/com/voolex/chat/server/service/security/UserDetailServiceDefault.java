@@ -1,11 +1,8 @@
 package com.voolex.chat.server.service.security;
 
 import com.voolex.chat.server.model.ChatUser;
-import com.voolex.chat.server.repository.UserEntityRepository;
 import com.voolex.chat.server.service.entityservice.UserEntityService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
