@@ -40,11 +40,5 @@ public class PrivateMessagesController {
         privateMessageHandlers.forEach(privateMessageInboundHandlerV -> {
             privateMessageInboundHandlerV.handle(privateMessageHandlerInfo);
         });
-//        var user = userEntityRepository.findById(userMessage.getRecipientId());
-//        if(user.isPresent()) {
-//
-//        } else {
-//            log.info("user ID %d not found".formatted(userMessage.getRecipientId()));
-//        }
     }
 }
