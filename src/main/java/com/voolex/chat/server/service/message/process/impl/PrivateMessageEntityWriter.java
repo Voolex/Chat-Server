@@ -48,7 +48,7 @@ public class PrivateMessageEntityWriter implements PrivateMessageInboundHandler 
 
         privateMessageService.save(privateMessage);
 
-        privateMessageHandlerInfo.setPrivateMessage(/*Optional.of(privateMessage)*/Optional.empty());
+        privateMessageHandlerInfo.setPrivateMessage(Optional.of(privateMessage));
         return privateMessageHandlerInfo;
     }
 
