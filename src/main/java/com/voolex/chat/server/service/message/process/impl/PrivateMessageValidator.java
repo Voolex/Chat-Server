@@ -4,7 +4,8 @@ import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
 import com.voolex.chat.server.exception.ValidationUserMessageException;
 import com.voolex.chat.server.model.ChatUser;
-import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandlerV;
+import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -15,10 +16,12 @@ import java.util.Objects;
  * Проверяется payload на пустоту
  */
 @Service
-public class PrivateMessageValidator implements PrivateMessageInboundHandlerV {
+@Slf4j
+public class PrivateMessageValidator implements PrivateMessageInboundHandler {
 
     @Override
     public PrivateMessageHandlerInfo handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
+        log.info("validate private message...");
         ChatUser chatUser = privateMessageHandlerInfo.getCurrentChatUser();
         UserMessage userMessage = privateMessageHandlerInfo.getUserMessage();
 
@@ -34,6 +37,6 @@ public class PrivateMessageValidator implements PrivateMessageInboundHandlerV {
 
     @Override
     public int getOrder() {
-        return LOWEST_PRECEDENCE-1;
+        return HIGHEST_PRECEDENCE;
     }
 }
