@@ -40,6 +40,10 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                         createPrivateMessagesDestination(userEntity),
                         "Private messages destination")
                 )
+                .subscriptionInfo(new SubscriptionInfo(
+                        createPrivateMessagesNotificationsDestination(userEntity),
+                        "Private messages notifications destination")
+                )
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
                 .userDialogs(userDialogService.findByUserEntity(userEntity))
                 .build();
@@ -51,5 +55,9 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
 
     private String createPrivateMessagesDestination(UserEntity userEntity) {
         return "/user/%s/private/messages".formatted(userEntity.getUsername());
+    }
+
+    private String createPrivateMessagesNotificationsDestination(UserEntity userEntity) {
+        return "/user/%s/private/notifications".formatted(userEntity.getUsername());
     }
 }
