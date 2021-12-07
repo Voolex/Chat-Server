@@ -5,16 +5,15 @@ import com.voolex.chat.common.dto.messages.server.InitMessage;
 import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.service.InitMessageCreatorService;
-import com.voolex.chat.server.service.MessagingService;
+import com.voolex.chat.server.service.MessagingServiceLegacy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.voolex.chat.common.constants.destinations.Destinations.SERVER_MESSAGE_DESTINATION;
 
 @Service
-public class MessagingServiceDefault implements MessagingService {
+public class MessagingServiceLegacyDefault implements MessagingServiceLegacy {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;

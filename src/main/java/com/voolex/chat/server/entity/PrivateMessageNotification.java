@@ -31,7 +31,6 @@ public class PrivateMessageNotification {
     @Column(name = "readed")
     private boolean isReaded;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "message_id", referencedColumnName = "id")
     private PrivateMessage privateMessage;

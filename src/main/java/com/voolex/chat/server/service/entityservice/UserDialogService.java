@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserDialogService {
     List<UserDialogDTO> findByUserEntity(UserEntity userEntity);
+
+    boolean isUserDialogExist(long userId, long withUserId);
 }

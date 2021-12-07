@@ -1,7 +1,7 @@
 package com.voolex.chat.server.controller;
 
 import com.voolex.chat.server.model.ChatUser;
-import com.voolex.chat.server.service.MessagingService;
+import com.voolex.chat.server.service.MessagingServiceLegacy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 @Slf4j
 public class ServerMessageController {
 
-    private final MessagingService messagingService;
+    private final MessagingServiceLegacy messagingServiceLegacy;
 
     /**
      * Принимает запрос на подписку получения команд от сервера
@@ -29,6 +29,6 @@ public class ServerMessageController {
     public void initSubscribeHandle(@DestinationVariable String username, Authentication authentication) {
         log.info("Пользователь %s запрашевает информацию для инициализации".formatted(username));
         ChatUser chatUser = (ChatUser) authentication.getPrincipal();
-        messagingService.sendInitMessageToUser(chatUser.getUserEntity());
+        messagingServiceLegacy.sendInitMessageToUser(chatUser.getUserEntity());
     }
 }

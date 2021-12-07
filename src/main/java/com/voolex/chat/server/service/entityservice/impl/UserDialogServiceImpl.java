@@ -46,4 +46,10 @@ public class UserDialogServiceImpl implements UserDialogService {
                 )
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public boolean isUserDialogExist(long userId, long withUserId) {
+        return userDialogsRepository.existByUserIdAndWithUserId(userId, withUserId) >= 1;
+    }
 }

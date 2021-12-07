@@ -7,7 +7,7 @@ import com.voolex.chat.server.entity.UserEntity;
 /**
  * Класс отправки сообщений пользователям
  */
-public interface MessagingService {
+public interface MessagingServiceLegacy {
 
     /**
      * Метод отправки сообщений конкретному пользователю

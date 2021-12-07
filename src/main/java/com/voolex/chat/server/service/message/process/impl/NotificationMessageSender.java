@@ -17,9 +17,9 @@ public class NotificationMessageSender implements PrivateMessageInboundHandler {
     @Override
     public PrivateMessageHandlerInfo handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
 
-        if(privateMessageHandlerInfo.getPrivateMessageNotification().isEmpty()) {
-            throw new NoSuchElementException("private message notification not found");
-        }
+//        if(privateMessageHandlerInfo.getPrivateMessageNotification().isEmpty()) {
+//            throw new NoSuchElementException("private message notification not found");
+//        }
 
         // TODO
 
@@ -28,6 +28,6 @@ public class NotificationMessageSender implements PrivateMessageInboundHandler {
 
     @Override
     public int getOrder() {
-        return HIGHEST_PRECEDENCE+3;
+        return HIGHEST_PRECEDENCE+4;
     }
 }
