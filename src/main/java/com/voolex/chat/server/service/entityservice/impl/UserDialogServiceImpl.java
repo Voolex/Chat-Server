@@ -2,6 +2,8 @@ package com.voolex.chat.server.service.entityservice.impl;
 
 import com.voolex.chat.common.dto.common.UserDialogDTO;
 import com.voolex.chat.common.dto.common.UserEntityDTO;
+import com.voolex.chat.server.entity.PrivateMessageNotification;
+import com.voolex.chat.server.entity.UserDialog;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.mapper.MapperDTO;
 import com.voolex.chat.server.mapper.impl.UserDialogMapperDefault;
@@ -49,7 +51,13 @@ public class UserDialogServiceImpl implements UserDialogService {
 
     @Override
     @Transactional
-    public boolean isUserDialogExist(long userId, long withUserId) {
-        return userDialogsRepository.existByUserIdAndWithUserId(userId, withUserId) >= 1;
+    public boolean existByUserIdAndWithUserId(long userId, long withUserId) {
+        return userDialogsRepository.existByUserIdAndWithUserId(userId, withUserId) > 0;
+    }
+
+    @Override
+    @Transactional
+    public UserDialog save(UserDialog userDialog) {
+        return userDialogsRepository.save(userDialog);
     }
 }

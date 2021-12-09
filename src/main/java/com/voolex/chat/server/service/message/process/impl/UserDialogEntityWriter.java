@@ -1,7 +1,7 @@
 package com.voolex.chat.server.service.message.process.impl;
 
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
-import com.voolex.chat.server.repository.UserDialogsRepository;
+import com.voolex.chat.server.entity.UserDialog;
 import com.voolex.chat.server.service.entityservice.UserDialogService;
 import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +20,16 @@ public class UserDialogEntityWriter implements PrivateMessageInboundHandler {
 
     @Override
     public PrivateMessageHandlerInfo handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
-        if(!userDialogService.isUserDialogExist(
+        if(!userDialogService.existByUserIdAndWithUserId(
                 privateMessageHandlerInfo.getUserMessage().getSenderId(),
                 privateMessageHandlerInfo.getUserMessage().getRecipientId())) {
 
+            UserDialog userDialog = UserDialog.builder()
+                    .userEntity(privateMessageHandlerInfo.getPrivateMessage().get().getSender())
+                    .withUserEntity(privateMessageHandlerInfo.getPrivateMessage().get().getRecipient())
+                    .lastMessageDateTime(privateMessageHandlerInfo.getPrivateMessage().get().getDateTime())
+                    .build();
+            userDialogService.save(userDialog);
         }
         return privateMessageHandlerInfo;
     }

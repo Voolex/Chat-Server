@@ -16,4 +16,8 @@ public interface PrivateMessageInboundHandler extends MessageHandler<PrivateMess
         return this.getOrder()-o.getOrder();
     }
 
+    default boolean enabled() {
+        return true;
+    }
+
 }
