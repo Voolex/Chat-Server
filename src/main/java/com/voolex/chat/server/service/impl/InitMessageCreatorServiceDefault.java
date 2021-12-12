@@ -5,8 +5,10 @@ import com.voolex.chat.common.v2.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.v2.dto.messages.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
 import com.voolex.chat.server.entity.UserEntity;
+import com.voolex.chat.server.mapper.impl.PrivateMessageNotificationMapperDefault;
 import com.voolex.chat.server.mapper.impl.UserEntityMapperDefault;
 import com.voolex.chat.server.service.InitMessageCreatorService;
+import com.voolex.chat.server.service.entityservice.PrivateMessageNotificationService;
 import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,13 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private UserEntityMapperDefault userEntityMapper;
 
     @Autowired
+    private PrivateMessageNotificationMapperDefault privateMessageNotificationMapperDefault;
+
+    @Autowired
     private UserDialogService userDialogService;
+
+    @Autowired
+    private PrivateMessageNotificationService privateMessageNotificationService;
 
     @Autowired
     private BuildInfo buildInfo;
@@ -39,6 +47,12 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .subscriptionInfos(getSubscriptionsInfo(userEntity))
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
                 .userDialogs(userDialogService.findByUserEntity(userEntity))
+                .notifications(privateMessageNotificationService.findAllNewNotifications(userEntity).stream()
+                        .map(
+                                privateMessageNotification ->
+                                        privateMessageNotificationMapperDefault.toDTO(privateMessageNotification))
+                        .collect(Collectors.toList())
+                )
                 .build();
 
         userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
