@@ -21,12 +21,10 @@ public class PrivateMessageInboundMainHandlerImpl implements PrivateMessageInbou
     @Override
     @Transactional
     public void handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
-//        privateMessageHandlers.forEach(System.out::println);
-//        privateMessageHandlers.forEach(privateMessageInboundHandler -> {
-//            System.out.println(privateMessageInboundHandler.getOrder() + privateMessageInboundHandler.toString());
-//        });
-
-        privateMessageHandlers.forEach(privateMessageInboundHandlerV ->
-                privateMessageInboundHandlerV.handle(privateMessageHandlerInfo));
+        privateMessageHandlers.stream().
+                filter(PrivateMessageInboundHandler::enabled).
+                forEach(privateMessageInboundHandler -> {
+                    privateMessageInboundHandler.handle(privateMessageHandlerInfo);
+                });
     }
 }

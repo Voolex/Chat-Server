@@ -16,6 +16,10 @@ public interface PrivateMessageInboundHandler extends MessageHandler<PrivateMess
         return this.getOrder()-o.getOrder();
     }
 
+    /**
+     * Включен ли данный обработчик. По умолчанию true. Для выключения установить в false
+     * @return включен ли обработчик
+     */
     default boolean enabled() {
         return true;
     }
