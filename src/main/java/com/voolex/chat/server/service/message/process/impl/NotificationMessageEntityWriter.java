@@ -1,6 +1,5 @@
 package com.voolex.chat.server.service.message.process.impl;
 
-import com.voolex.chat.common.dto.messages.user.UserMessage;
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
 import com.voolex.chat.server.entity.PrivateMessage;
 import com.voolex.chat.server.entity.PrivateMessageNotification;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -39,6 +39,7 @@ public class NotificationMessageEntityWriter implements PrivateMessageInboundHan
                 .build();
 
         privateMessageNotificationService.save(privateMessageNotification);
+        privateMessageHandlerInfo.setPrivateMessageNotification(Optional.of(privateMessageNotification));
 
         return privateMessageHandlerInfo;
     }

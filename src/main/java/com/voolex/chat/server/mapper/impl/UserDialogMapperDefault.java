@@ -1,6 +1,6 @@
 package com.voolex.chat.server.mapper.impl;
 
-import com.voolex.chat.common.dto.common.UserDialogDTO;
+import com.voolex.chat.common.v2.dto.common.UserDialogDTO;
 import com.voolex.chat.server.entity.UserDialog;
 import com.voolex.chat.server.mapper.MapperDTO;
 import org.springframework.beans.factory.annotation.Autowired;

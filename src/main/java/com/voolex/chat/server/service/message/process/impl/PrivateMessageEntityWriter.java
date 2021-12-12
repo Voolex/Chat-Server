@@ -1,6 +1,6 @@
 package com.voolex.chat.server.service.message.process.impl;
 
-import com.voolex.chat.common.dto.messages.user.UserMessage;
+import com.voolex.chat.common.v2.dto.messages.AbstractPrivateMessage;
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
 import com.voolex.chat.server.entity.PrivateMessage;
 import com.voolex.chat.server.service.entityservice.PrivateMessageService;
@@ -32,7 +32,7 @@ public class PrivateMessageEntityWriter implements PrivateMessageInboundHandler 
     @Transactional
     public PrivateMessageHandlerInfo handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
         log.info("write private message to db...");
-        UserMessage userMessage = privateMessageHandlerInfo.getUserMessage();
+        AbstractPrivateMessage userMessage = privateMessageHandlerInfo.getUserMessage();
 
         PrivateMessage privateMessage = PrivateMessage.builder()
                 .messageType(userMessage.getMessageType())

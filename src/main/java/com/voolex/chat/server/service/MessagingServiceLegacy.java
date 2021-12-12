@@ -1,7 +1,7 @@
 package com.voolex.chat.server.service;
 
-import com.voolex.chat.common.dto.messages.server.InitMessage;
-import com.voolex.chat.common.dto.messages.user.UserMessage;
+import com.voolex.chat.common.v2.dto.messages.AbstractPrivateMessage;
+import com.voolex.chat.common.v2.dto.messages.InitMessage;
 import com.voolex.chat.server.entity.UserEntity;
 
 /**
@@ -15,7 +15,7 @@ public interface MessagingServiceLegacy {
      * @param message объект сообщения
      * @param <T>
      */
-    public <T extends UserMessage> void sendToUser(UserEntity userEntity, T message);
+    public <T extends AbstractPrivateMessage> void sendToUser(UserEntity userEntity, T message);
 
     /**
      * Метод отправки сообщения инициализации пользователю

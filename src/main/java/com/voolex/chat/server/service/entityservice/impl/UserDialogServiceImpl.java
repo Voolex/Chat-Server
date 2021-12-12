@@ -1,11 +1,8 @@
 package com.voolex.chat.server.service.entityservice.impl;
 
-import com.voolex.chat.common.dto.common.UserDialogDTO;
-import com.voolex.chat.common.dto.common.UserEntityDTO;
-import com.voolex.chat.server.entity.PrivateMessageNotification;
+import com.voolex.chat.common.v2.dto.common.UserDialogDTO;
 import com.voolex.chat.server.entity.UserDialog;
 import com.voolex.chat.server.entity.UserEntity;
-import com.voolex.chat.server.mapper.MapperDTO;
 import com.voolex.chat.server.mapper.impl.UserDialogMapperDefault;
 import com.voolex.chat.server.repository.UserDialogsRepository;
 import com.voolex.chat.server.service.entityservice.UserDialogService;

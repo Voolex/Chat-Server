@@ -1,6 +1,6 @@
 package com.voolex.chat.server.service.message.process.impl;
 
-import com.voolex.chat.common.dto.messages.user.UserMessage;
+import com.voolex.chat.common.v2.dto.messages.AbstractPrivateMessage;
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
 import com.voolex.chat.server.exception.ValidationUserMessageException;
 import com.voolex.chat.server.model.ChatUser;
@@ -23,7 +23,7 @@ public class PrivateMessageValidator implements PrivateMessageInboundHandler {
     public PrivateMessageHandlerInfo handle(PrivateMessageHandlerInfo privateMessageHandlerInfo) {
         log.info("validate private message...");
         ChatUser chatUser = privateMessageHandlerInfo.getCurrentChatUser();
-        UserMessage userMessage = privateMessageHandlerInfo.getUserMessage();
+        AbstractPrivateMessage userMessage = privateMessageHandlerInfo.getUserMessage();
 
         if(chatUser.getId() != userMessage.getSenderId()) {
             throw new ValidationUserMessageException("principal user id does not match with userMessage id");

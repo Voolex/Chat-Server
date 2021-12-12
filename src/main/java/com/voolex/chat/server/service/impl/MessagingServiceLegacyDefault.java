@@ -1,16 +1,14 @@
 package com.voolex.chat.server.service.impl;
 
-import com.voolex.chat.common.dto.messages.BaseMessage;
-import com.voolex.chat.common.dto.messages.server.InitMessage;
-import com.voolex.chat.common.dto.messages.user.UserMessage;
+import com.voolex.chat.common.v2.dto.messages.AbstractPrivateMessage;
+import com.voolex.chat.common.v2.dto.messages.BaseMessage;
+import com.voolex.chat.common.v2.dto.messages.InitMessage;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.MessagingServiceLegacy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
-import static com.voolex.chat.common.constants.destinations.Destinations.SERVER_MESSAGE_DESTINATION;
 
 @Service
 public class MessagingServiceLegacyDefault implements MessagingServiceLegacy {
@@ -22,8 +20,8 @@ public class MessagingServiceLegacyDefault implements MessagingServiceLegacy {
     private InitMessageCreatorService initMessageCreatorService;
 
     @Override
-    public <T extends UserMessage> void sendToUser(UserEntity userEntity, T message) {
-        messagingTemplate.convertAndSendToUser(userEntity.getUsername(), "private/messages", message);
+    public <T extends AbstractPrivateMessage> void sendToUser(UserEntity userEntity, T message) {
+        messagingTemplate.convertAndSendToUser(userEntity.getUsername(), "private/notifications", message);
     }
 
     @Override
@@ -35,7 +33,7 @@ public class MessagingServiceLegacyDefault implements MessagingServiceLegacy {
     public void sendInitMessageToUser(UserEntity userEntity) {
         sendToUser(
                 userEntity,
-                SERVER_MESSAGE_DESTINATION,
+                "server",
                 initMessageCreatorService.createInitMessage(userEntity)
         );
     }
