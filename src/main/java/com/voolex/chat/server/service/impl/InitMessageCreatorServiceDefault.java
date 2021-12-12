@@ -1,5 +1,6 @@
 package com.voolex.chat.server.service.impl;
 
+import com.voolex.chat.common.v2.dto.common.MessageType;
 import com.voolex.chat.common.v2.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.v2.dto.messages.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
@@ -10,6 +11,11 @@ import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -30,14 +36,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
         InitMessage initMessage = InitMessage.builder()
                 .message("Init message")
                 .serverVersion(buildInfo.getVersion())
-                .subscriptionInfo(new SubscriptionInfo(
-                        createPrivateMessagesDestination(userEntity),
-                        "Private messages destination")
-                )
-                .subscriptionInfo(new SubscriptionInfo(
-                        createPrivateMessagesNotificationsDestination(userEntity),
-                        "Private messages notifications destination")
-                )
+                .subscriptionInfos(getSubscriptionsInfo(userEntity))
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
                 .userDialogs(userDialogService.findByUserEntity(userEntity))
                 .build();
@@ -47,11 +46,19 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
         return initMessage;
     }
 
-    private String createPrivateMessagesDestination(UserEntity userEntity) {
-        return "/user/%s/private/messages".formatted(userEntity.getUsername());
+    private Iterable<String> getDestinations(UserEntity userEntity) {
+        return Arrays.stream(MessageType.values()).
+                map(messageType -> "/user/" + userEntity.getUsername() + messageType.getDestination()).
+                collect(Collectors.toList());
     }
 
-    private String createPrivateMessagesNotificationsDestination(UserEntity userEntity) {
-        return "/user/%s/private/notifications".formatted(userEntity.getUsername());
+    private List<SubscriptionInfo> getSubscriptionsInfo(UserEntity userEntity) {
+        return Arrays.stream(MessageType.values())
+                .filter(messageType -> !messageType.equals(MessageType.INIT))
+                .map(messageType -> new SubscriptionInfo(
+                        "/user/" + userEntity.getUsername() + messageType.getDestination(),
+                        messageType.getDescription())
+                )
+                .collect(Collectors.toList());
     }
 }
