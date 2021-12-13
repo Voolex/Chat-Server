@@ -1,9 +1,11 @@
 package com.voolex.chat.server.service.impl;
 
 import com.voolex.chat.common.v2.dto.common.MessageType;
+import com.voolex.chat.common.v2.dto.common.NotificationMessageDTO;
 import com.voolex.chat.common.v2.dto.common.SubscriptionInfo;
 import com.voolex.chat.common.v2.dto.messages.InitMessage;
 import com.voolex.chat.server.common.BuildInfo;
+import com.voolex.chat.server.entity.PrivateMessageNotification;
 import com.voolex.chat.server.entity.UserEntity;
 import com.voolex.chat.server.mapper.impl.PrivateMessageNotificationMapperDefault;
 import com.voolex.chat.server.mapper.impl.UserEntityMapperDefault;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +30,7 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
     private UserEntityMapperDefault userEntityMapper;
 
     @Autowired
-    private PrivateMessageNotificationMapperDefault privateMessageNotificationMapperDefault;
+    private PrivateMessageNotificationMapperDefault privateMessageNotificationMapper;
 
     @Autowired
     private UserDialogService userDialogService;
@@ -47,12 +50,13 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .subscriptionInfos(getSubscriptionsInfo(userEntity))
                 .userEntityDTO(userEntityMapper.toDTO(userEntity))
                 .userDialogs(userDialogService.findByUserEntity(userEntity))
-                .notifications(privateMessageNotificationService.findAllNewNotifications(userEntity).stream()
-                        .map(
-                                privateMessageNotification ->
-                                        privateMessageNotificationMapperDefault.toDTO(privateMessageNotification))
-                        .collect(Collectors.toList())
-                )
+                .notifications(getNotifications(userEntity))
+//                .notifications(privateMessageNotificationService.findAllNewNotifications(userEntity).stream()
+//                        .map(
+//                                privateMessageNotification ->
+//                                        privateMessageNotificationMapperDefault.toDTO(privateMessageNotification))
+//                        .collect(Collectors.toList())
+//                )
                 .build();
 
         userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
@@ -60,10 +64,18 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
         return initMessage;
     }
 
+    private List<NotificationMessageDTO> getNotifications(UserEntity userEntity) {
+        var groupingMap = privateMessageNotificationService.
+                findAllNewNotifications(userEntity).stream()
+                .collect(Collectors.groupingBy(PrivateMessageNotification::getSender));
+        return groupingMap.values().stream()
+                .map(value -> privateMessageNotificationMapper.toDTO(value)).collect(Collectors.toList());
+    }
+
     private Iterable<String> getDestinations(UserEntity userEntity) {
-        return Arrays.stream(MessageType.values()).
-                map(messageType -> "/user/" + userEntity.getUsername() + messageType.getDestination()).
-                collect(Collectors.toList());
+        return Arrays.stream(MessageType.values())
+                .map(messageType -> "/user/" + userEntity.getUsername() + messageType.getDestination())
+                .collect(Collectors.toList());
     }
 
     private List<SubscriptionInfo> getSubscriptionsInfo(UserEntity userEntity) {
