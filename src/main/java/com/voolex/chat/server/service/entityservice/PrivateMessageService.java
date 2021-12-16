@@ -10,7 +10,7 @@ public interface PrivateMessageService {
     /**
      * Кол-во записей на странице по умолчанию
      */
-    int DEFAULT_PAGE_SIZE = 100;
+    int DEFAULT_PAGE_SIZE = 50;
 
     /**
      * Поиск сообщений по UserEntity отправителя
@@ -20,7 +20,7 @@ public interface PrivateMessageService {
      * @param size кол-во сообщений на одной странице
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(UserEntity sender, int page, int size);
+    List<PrivateMessage> findBySender(UserEntity sender, int page, int size);
 
     /**
      * Поиск сообщений по ID отправителя
@@ -29,7 +29,7 @@ public interface PrivateMessageService {
      * @param size кол-во сообщений на одной странице
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(long senderId, int page, int size);
+    List<PrivateMessage> findBySender(long senderId, int page, int size);
 
     /**
      * Поиск сообщений по UserEntity отправителя с кол-вом записей на странице по умолчанию  {@link #DEFAULT_PAGE_SIZE}
@@ -38,7 +38,7 @@ public interface PrivateMessageService {
      * @param page номер страницы, которую необходимо получить
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(UserEntity sender, int page);
+    List<PrivateMessage> findBySender(UserEntity sender, int page);
 
     /**
      * Поиск сообщений по ID отправителя с кол-вом записей на странице по умолчанию
@@ -46,7 +46,15 @@ public interface PrivateMessageService {
      * @param page номер страницы, которую необходимо получить
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(long senderId, int page);
+    List<PrivateMessage> findBySender(long senderId, int page);
+
+    List<PrivateMessage> findBySenderAndRecipient(UserEntity sender, UserEntity recipient, int page, int size);
+
+    List<PrivateMessage> findBySenderAndRecipient(UserEntity sender, UserEntity recipient, int page);
+
+    List<PrivateMessage> findBySenderAndRecipient(long senderId, long recipientId, int page, int size);
+
+    List<PrivateMessage> findBySenderAndRecipient(long senderId, long recipientId, int page);
 
     PrivateMessage save(PrivateMessage privateMessage);
 }
