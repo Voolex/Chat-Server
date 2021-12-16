@@ -35,7 +35,7 @@ public class PrivateMessageEntityWriter implements PrivateMessageInboundHandler 
         AbstractPrivateMessage userMessage = privateMessageHandlerInfo.getUserMessage();
 
         PrivateMessage privateMessage = PrivateMessage.builder()
-                .messageType(userMessage.getMessageType())
+                .payloadType(userMessage.getPayloadType())
                 .dateTime(LocalDateTime.now())
                 .sender(userEntityService.findById(userMessage.getSenderId()).orElseThrow(
                         () -> new UsernameNotFoundException("User with id %d not found".formatted(userMessage.getRecipientId())))

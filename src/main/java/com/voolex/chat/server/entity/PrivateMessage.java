@@ -1,6 +1,7 @@
 package com.voolex.chat.server.entity;
 
 import com.voolex.chat.common.v2.dto.common.MessageType;
+import com.voolex.chat.common.v2.dto.common.PayloadType;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -43,5 +44,5 @@ public class PrivateMessage {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payload_type")
-    private MessageType messageType;
+    private PayloadType payloadType;
 }
