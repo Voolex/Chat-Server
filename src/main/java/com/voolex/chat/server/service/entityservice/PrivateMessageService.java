@@ -6,19 +6,47 @@ import com.voolex.chat.server.entity.UserEntity;
 import java.util.List;
 
 public interface PrivateMessageService {
+
+    /**
+     * Кол-во записей на странице по умолчанию
+     */
+    int DEFAULT_PAGE_SIZE = 100;
+
     /**
      * Поиск сообщений по UserEntity отправителя
-     * @param sender UserEntity отправителя
+     * Сообщения сортируются по дате
+     * @param sender UserEntity отправителя {@link com.voolex.chat.server.entity.UserEntity}
+     * @param page номер страницы, которую необходимо получить
+     * @param size кол-во сообщений на одной странице
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(UserEntity sender);
+    List<PrivateMessage> findAllBySender(UserEntity sender, int page, int size);
 
     /**
      * Поиск сообщений по ID отправителя
      * @param userId ID отправителя
+     * @param page номер страницы, которую необходимо получить
+     * @param size кол-во сообщений на одной странице
      * @return список сообщений пользователя
      */
-    List<PrivateMessage> findAllBySender(long userId);
+    List<PrivateMessage> findAllBySender(long senderId, int page, int size);
+
+    /**
+     * Поиск сообщений по UserEntity отправителя с кол-вом записей на странице по умолчанию  {@link #DEFAULT_PAGE_SIZE}
+     * <p> Сообщения сортируются по дате
+     * @param sender UserEntity отправителя {@link com.voolex.chat.server.entity.UserEntity}
+     * @param page номер страницы, которую необходимо получить
+     * @return список сообщений пользователя
+     */
+    List<PrivateMessage> findAllBySender(UserEntity sender, int page);
+
+    /**
+     * Поиск сообщений по ID отправителя с кол-вом записей на странице по умолчанию
+     * @param userId ID отправителя
+     * @param page номер страницы, которую необходимо получить
+     * @return список сообщений пользователя
+     */
+    List<PrivateMessage> findAllBySender(long senderId, int page);
 
     PrivateMessage save(PrivateMessage privateMessage);
 }

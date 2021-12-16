@@ -4,7 +4,6 @@ import com.voolex.chat.common.v2.dto.messages.NotificationMessage;
 import com.voolex.chat.server.common.PrivateMessageHandlerInfo;
 import com.voolex.chat.server.entity.PrivateMessageNotification;
 import com.voolex.chat.server.mapper.impl.PrivateMessageNotificationMapperDefault;
-import com.voolex.chat.server.service.MessagingServiceLegacy;
 import com.voolex.chat.server.service.message.process.PrivateMessageInboundHandler;
 import com.voolex.chat.server.service.message.sending.MessagingService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -34,8 +32,6 @@ public class NotificationMessageSender implements PrivateMessageInboundHandler {
         if(privateMessageHandlerInfo.getPrivateMessageNotification().isEmpty()) {
             throw new NoSuchElementException("private message notification not found");
         }
-
-        log.info("send notification message to user [%d | ]".formatted(privateMessageHandlerInfo.getUserMessage().getRecipientId()));
 
         messagingService.sendMessageToUser(
                 privateMessageHandlerInfo.getPrivateMessage().get().getRecipient(),

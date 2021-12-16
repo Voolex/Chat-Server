@@ -11,6 +11,7 @@ import com.voolex.chat.server.mapper.impl.PrivateMessageNotificationMapperDefaul
 import com.voolex.chat.server.mapper.impl.UserEntityMapperDefault;
 import com.voolex.chat.server.service.InitMessageCreatorService;
 import com.voolex.chat.server.service.entityservice.PrivateMessageNotificationService;
+import com.voolex.chat.server.service.entityservice.PrivateMessageService;
 import com.voolex.chat.server.service.entityservice.UserDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
 
     @Autowired
     private UserEntityMapperDefault userEntityMapper;
+
+    @Autowired
+    private PrivateMessageService privateMessageService;
 
     @Autowired
     private PrivateMessageNotificationMapperDefault privateMessageNotificationMapper;
@@ -60,6 +64,8 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
                 .build();
 
         userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
+
+//        privateMessageService.findAllBySender(userEntity).forEach(System.out::println);
 
         return initMessage;
     }
