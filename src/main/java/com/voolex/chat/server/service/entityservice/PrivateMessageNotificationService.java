@@ -18,4 +18,12 @@ public interface PrivateMessageNotificationService {
 
     List<PrivateMessageNotification> findAllByRecipientAndReaded(UserEntity recipient, boolean readed);
 
+    /**
+     * Метод позволяет получить все новые уведомления для конкретного пользователя с учетом отправителя
+     * @param sender сущность отправителя
+     * @param recipient сущность получателя ( для кого необходимо получить уведомления )
+     * @return список с непрочитанными уведомлениями
+     */
+    List<PrivateMessageNotification> findAllNewNotificationsBySenderAndRecipient(UserEntity sender, UserEntity recipient);
+
 }

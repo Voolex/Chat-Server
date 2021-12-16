@@ -11,26 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class PrivateMessageNotificationServiceImpl implements PrivateMessageNotificationService {
 
     @Autowired
     private PrivateMessageNotificationRepository privateMessageNotificationRepository;
 
     @Override
-    @Transactional
     public PrivateMessageNotification save(PrivateMessageNotification privateMessageNotification) {
         return privateMessageNotificationRepository.save(privateMessageNotification);
     }
 
     @Override
-    @Transactional
     public List<PrivateMessageNotification> findAllNewNotifications(UserEntity recipient) {
         return privateMessageNotificationRepository.findAllByRecipientAndIsReaded(recipient, false);
     }
 
     @Override
-    @Transactional
     public List<PrivateMessageNotification> findAllByRecipientAndReaded(UserEntity recipient, boolean readed) {
         return privateMessageNotificationRepository.findAllByRecipientAndIsReaded(recipient, readed);
+    }
+
+    @Override
+    public List<PrivateMessageNotification> findAllNewNotificationsBySenderAndRecipient(UserEntity sender, UserEntity recipient) {
+        return privateMessageNotificationRepository.findAllBySenderAndRecipientAndIsReaded(sender, recipient, false);
     }
 }

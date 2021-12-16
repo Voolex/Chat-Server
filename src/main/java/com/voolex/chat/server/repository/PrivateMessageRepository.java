@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PrivateMessageRepository extends PagingAndSortingRepository<PrivateMessage, String> {
 
@@ -14,4 +16,6 @@ public interface PrivateMessageRepository extends PagingAndSortingRepository<Pri
     Page<PrivateMessage> findByRecipient(UserEntity recipient, Pageable pageable);
 
     Page<PrivateMessage> findBySenderAndRecipient(UserEntity sender, UserEntity recipient, Pageable pageable);
+
+    Optional<PrivateMessage> findById(String id);
 }

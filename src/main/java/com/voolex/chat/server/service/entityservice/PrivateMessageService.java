@@ -4,6 +4,7 @@ import com.voolex.chat.server.entity.PrivateMessage;
 import com.voolex.chat.server.entity.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PrivateMessageService {
 
@@ -24,7 +25,7 @@ public interface PrivateMessageService {
 
     /**
      * Поиск сообщений по ID отправителя
-     * @param userId ID отправителя
+     * @param senderId ID отправителя
      * @param page номер страницы, которую необходимо получить
      * @param size кол-во сообщений на одной странице
      * @return список сообщений пользователя
@@ -42,7 +43,7 @@ public interface PrivateMessageService {
 
     /**
      * Поиск сообщений по ID отправителя с кол-вом записей на странице по умолчанию
-     * @param userId ID отправителя
+     * @param senderId ID отправителя
      * @param page номер страницы, которую необходимо получить
      * @return список сообщений пользователя
      */
@@ -55,6 +56,13 @@ public interface PrivateMessageService {
     List<PrivateMessage> findBySenderAndRecipient(long senderId, long recipientId, int page, int size);
 
     List<PrivateMessage> findBySenderAndRecipient(long senderId, long recipientId, int page);
+
+    /**
+     * Поиск сообщения по его ID
+     * @param id ID сообщения
+     * @return найденное сообщение
+     */
+    Optional<PrivateMessage> findById(String id);
 
     PrivateMessage save(PrivateMessage privateMessage);
 }
