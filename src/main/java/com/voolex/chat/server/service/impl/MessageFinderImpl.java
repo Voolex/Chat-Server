@@ -1,8 +1,10 @@
 package com.voolex.chat.server.service.impl;
 
+import com.voolex.chat.common.v2.dto.common.PrivateMessageDTO;
 import com.voolex.chat.server.entity.PrivateMessage;
 import com.voolex.chat.server.entity.PrivateMessageNotification;
 import com.voolex.chat.server.entity.UserEntity;
+import com.voolex.chat.server.mapper.impl.PrivateMessageMapperDefault;
 import com.voolex.chat.server.service.MessageFinder;
 import com.voolex.chat.server.service.entityservice.PrivateMessageNotificationService;
 import com.voolex.chat.server.service.entityservice.PrivateMessageService;
@@ -17,6 +19,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageFinderImpl implements MessageFinder {
@@ -29,6 +32,9 @@ public class MessageFinderImpl implements MessageFinder {
 
     @Autowired
     private UserEntityService userEntityService;
+
+    @Autowired
+    private PrivateMessageMapperDefault privateMessageMapperDefault;
 
     @Override
     @Transactional
@@ -52,5 +58,13 @@ public class MessageFinderImpl implements MessageFinder {
         notifications.forEach(notification -> messages.add(notification.getPrivateMessage()));
 
         return messages;
+    }
+
+    @Override
+    @Transactional
+    public List<PrivateMessageDTO> findNewMessagesDtoByRecipientAndSender(long recipient, long sender) {
+        return findNewMessagesByRecipientAndSender(recipient, sender).stream()
+                .map(m -> privateMessageMapperDefault.toDTO(m))
+                .collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.voolex.chat.server.service;
 
+import com.voolex.chat.common.v2.dto.common.PrivateMessageDTO;
 import com.voolex.chat.server.entity.PrivateMessage;
 import com.voolex.chat.server.entity.UserEntity;
 import org.springframework.security.core.userdetails.User;
@@ -17,4 +18,6 @@ public interface MessageFinder {
      * @return список сообщений
      */
     List<PrivateMessage> findNewMessagesByRecipientAndSender(long recipient, long sender);
+
+    List<PrivateMessageDTO> findNewMessagesDtoByRecipientAndSender(long recipient, long sender);
 }

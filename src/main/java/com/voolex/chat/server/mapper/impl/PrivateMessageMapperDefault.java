@@ -12,18 +12,17 @@ import javax.persistence.EntityManager;
 
 @Service
 public class PrivateMessageMapperDefault implements MapperDTO<PrivateMessage, PrivateMessageDTO> {
-
-    @Autowired
-    private EntityManager entityManager;
+//
+//    @Autowired
+//    private EntityManager entityManager;
 
     @Override
-    @Transactional
     public PrivateMessageDTO toDTO(PrivateMessage privateMessage) {
 
-        Session session = entityManager.unwrap(Session.class);
-//        privateMessage = (PrivateMessage) session.merge(privateMessage);
-
-        session.update(privateMessage);
+//        Session session = entityManager.unwrap(Session.class);
+////        privateMessage = (PrivateMessage) session.merge(privateMessage);
+//
+////        session.update(privateMessage);
         return new PrivateMessageDTO(
                 privateMessage.getSender().getId(),
                 privateMessage.getRecipient().getId(),
