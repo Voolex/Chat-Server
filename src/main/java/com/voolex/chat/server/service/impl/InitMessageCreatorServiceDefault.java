@@ -62,15 +62,15 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
 //                        .collect(Collectors.toList())
 //                )
                 .build();
-
-        userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
-
-//        privateMessageService.findAllBySender(userEntity).forEach(System.out::println);
-        var array1 = privateMessageService.findBySender(8, 0);
-        array1.forEach(System.out::println);
-        System.out.println("________________________________");
-        var array2 = privateMessageService.findBySender(8, 1);
-        array2.forEach(System.out::println);
+//
+//        userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
+//
+////        privateMessageService.findAllBySender(userEntity).forEach(System.out::println);
+//        var array1 = privateMessageService.findBySender(8, 0);
+//        array1.forEach(System.out::println);
+//        System.out.println("________________________________");
+//        var array2 = privateMessageService.findBySender(8, 1);
+//        array2.forEach(System.out::println);
 
         return initMessage;
     }

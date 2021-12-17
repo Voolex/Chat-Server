@@ -6,7 +6,7 @@
 
     <groupId>com.voolex.chat</groupId>
     <artifactId>chat-server</artifactId>
-    <version>0.0.3.1-SNAPSHOT</version>
+    <version>0.0.3.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>

@@ -7,11 +7,13 @@ import com.voolex.chat.server.service.MessageFinder;
 import com.voolex.chat.server.service.entityservice.PrivateMessageNotificationService;
 import com.voolex.chat.server.service.entityservice.PrivateMessageService;
 import com.voolex.chat.server.service.entityservice.UserEntityService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,8 @@ public class MessageFinderImpl implements MessageFinder {
     @Override
     @Transactional
     public List<PrivateMessage> findNewMessagesByRecipientAndSender(long recipient, long sender) {
+
+
         Optional<UserEntity> recipientEntityOptional = userEntityService.findById(recipient);
         Optional<UserEntity> senderEntityOptional = userEntityService.findById(sender);
 
