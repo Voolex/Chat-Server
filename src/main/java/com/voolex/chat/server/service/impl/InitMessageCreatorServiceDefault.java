@@ -62,6 +62,8 @@ public class InitMessageCreatorServiceDefault implements InitMessageCreatorServi
 //                        .collect(Collectors.toList())
 //                )
                 .build();
+
+
 //
 //        userDialogService.findByUserEntity(userEntity).forEach(System.out::println);
 //

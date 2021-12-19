@@ -46,10 +46,10 @@ public class MessageFinderImpl implements MessageFinder {
 
         List<PrivateMessageNotification> notifications = privateMessageNotificationService.
                 findAllNewNotificationsBySenderAndRecipient(
-                        recipientEntityOptional.orElseThrow(
+                        senderEntityOptional.orElseThrow(
                                 () -> new UsernameNotFoundException("User with id %d not found".formatted(recipient))
                         ),
-                        senderEntityOptional.orElseThrow(
+                        recipientEntityOptional.orElseThrow(
                                 () -> new UsernameNotFoundException("User with id %d not found".formatted(recipient))
                         )
                 );
